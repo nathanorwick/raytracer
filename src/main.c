@@ -5,7 +5,7 @@
 #define IMAGE_HEIGHT 1080
 
 int main(void) {
-	FILE *image = fopen("./image.ppm", "w");
+	FILE *image = fopen("./render.ppm", "w");
 
 	fprintf(image, "P3\n");
 	fprintf(image, "%d %d\n", IMAGE_WIDTH, IMAGE_HEIGHT);
