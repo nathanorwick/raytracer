@@ -12,7 +12,7 @@ double y(struct vec3 v);
 double z(struct vec3 v);
 
 struct vec3 at(struct vec3 v, int index);
-struct vec3 change(struct vec3 v, int index, double e);
+struct vec3 update(struct vec3 v, int index, double e);
 
 struct vec3 negative(struct vec3 v);
 double magnitute(struct vec3 v);

@@ -13,7 +13,6 @@ int main(void) {
 
 	for (int j = IMAGE_HEIGHT - 1; j >= 0; --j) {
 		fprintf(stdout, "\rScanlines remaining: %d ", j);
-		fflush(stdout);
 
 		for (int i = 0; i < IMAGE_WIDTH; ++i) {
 			double r = (double) i / (IMAGE_WIDTH - 1);
