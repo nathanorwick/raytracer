@@ -5,4 +5,6 @@
 
 typedef struct vec3 point3;
 
+/* See "vec3.h" for more API */
+
 #endif
