@@ -9,16 +9,12 @@
 
 int main(void) {
 	FILE *image = fopen("./render.ppm", "w");
-
-	fprintf(image, "P3\n");
-	fprintf(image, "%d %d\n", IMAGE_WIDTH, IMAGE_HEIGHT);
-	fprintf(image, "255\n");
+	fprintf(image, "P3\n%d %d\n255\n", IMAGE_WIDTH, IMAGE_HEIGHT);
 
 	for (int j = IMAGE_HEIGHT - 1; j >= 0; --j) {
 		fprintf(stdout, "\rScanlines remaining: %d ", j);
-
 		for (int i = 0; i < IMAGE_WIDTH; ++i) {
-            color pixel_color = vec3_new(
+            color pixel_color = color_new(
 				(double) i / (IMAGE_WIDTH - 1),
 				(double) j / (IMAGE_HEIGHT - 1),
 				0.25
