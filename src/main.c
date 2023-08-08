@@ -14,13 +14,13 @@
 double hit_sphere(point3 center, double radius, ray r) {
     vec3 oc = subtract(r.origin, center);
 	double a = dot(r.direction, r.direction);
-	double b = 2.0 * dot(oc, r.direction);
+	double half_b = dot(oc, r.direction);
 	double c = dot(oc, oc) - radius * radius;
-	double discriminant = b * b - 4 * a * c;
+	double discriminant = half_b * half_b - a * c;
 	if (discriminant < 0)
 		return -1.0;
 	else
-        return (-1 * b - sqrt(discriminant)) / (2.0 * a);
+		return (-1 * half_b - sqrt(discriminant)) / a;
 }
 
 color ray_color(ray r) {
