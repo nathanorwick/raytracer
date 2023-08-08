@@ -6,7 +6,7 @@
 
 #define color_new vec3_new
 
-typedef struct vec3 color;
+typedef vec3 color;
 
 int r(color point_color);
 int g(color point_color);

@@ -1,32 +1,32 @@
 #ifndef VEC3_H
 #define VEC3_H
 
-struct vec3 {
+typedef struct vec3 {
 	double e[3];
-};
+} vec3;
 
-struct vec3 vec3_new(double e1, double e2, double e3);
+vec3 vec3_new(double e1, double e2, double e3);
 
-double x(struct vec3 v);
-double y(struct vec3 v);
-double z(struct vec3 v);
+double x(vec3 v);
+double y(vec3 v);
+double z(vec3 v);
 
-double at(struct vec3 v, int index);
-void update(struct vec3 *v, int index, double e);
+double at(vec3 v, int index);
+void update(vec3 *v, int index, double e);
 
-struct vec3 negative(struct vec3 v);
-double magnitude(struct vec3 v);
-struct vec3 normalized(struct vec3 v);
+vec3 negative(vec3 v);
+double magnitude(vec3 v);
+vec3 normalized(vec3 v);
 
-struct vec3 add_d(struct vec3 v, double d);
-struct vec3 subtract_d(struct vec3 v, double d);
-struct vec3 multiply_d(struct vec3 v, double d);
-struct vec3 divide_d(struct vec3 v, double d);
+vec3 add_d(vec3 v, double d);
+vec3 subtract_d(vec3 v, double d);
+vec3 multiply_d(vec3 v, double d);
+vec3 divide_d(vec3 v, double d);
 
-struct vec3 add(struct vec3 u, struct vec3 v);
-struct vec3 subtract(struct vec3 u, struct vec3 v);
+vec3 add(vec3 u, vec3 v);
+vec3 subtract(vec3 u, vec3 v);
 
-double dot(struct vec3 u, struct vec3 v);
-struct vec3 cross(struct vec3 u, struct vec3 v);
+double dot(vec3 u, vec3 v);
+struct vec3 cross(vec3 u, vec3 v);
 
 #endif
