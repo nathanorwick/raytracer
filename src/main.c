@@ -2,6 +2,7 @@
 #include "point3.h"
 #include "ray.h"
 #include "vec3.h"
+#include <math.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -10,24 +11,37 @@
 #define IMAGE_WIDTH 1920
 #define IMAGE_HEIGHT (int) (IMAGE_WIDTH / ASPECT_RATIO)
 
-bool hit_sphere(point3 center, double radius, ray r) {
+double hit_sphere(point3 center, double radius, ray r) {
     vec3 oc = subtract(r.origin, center);
 	double a = dot(r.direction, r.direction);
-	double b = 2.0 * dot(oc, r.direction);
+	double half_b = dot(oc, r.direction);
 	double c = dot(oc, oc) - radius * radius;
-	double discriminant = b * b - 4 * a * c;
-	return (discriminant > 0);
+	double discriminant = half_b * half_b - a * c;
+	if (discriminant < 0)
+		return -1.0;
+	else
+		return (-1 * half_b - sqrt(discriminant)) / a;
 }
 
 color ray_color(ray r) {
-	if (hit_sphere(point3_new(0, 0, -1), 0.5, r))
-		return color_new(1, 0, 0);
-	vec3 unit_direction = normalized(r.direction);
-	double t = 0.5 * ((unit_direction.e)[1] + 1.0);
-	return add(
-		multiply_d(color_new(1.0, 1.0, 1.0), (1.0 - t)),
-		multiply_d(color_new(0.5, 0.7, 1.0), t)
-	);
+	double t = hit_sphere(point3_new(0, 0, -1), 0.5, r);
+	if (t > 0.0) {
+	    vec3 N = normalized(subtract
+			(ray_at(r, t),
+			vec3_new(0, 0, -1))
+		);
+		return multiply_d(
+			color_new(x(N) + 1, y(N) + 1, z(N) + 1),
+			0.5
+		);
+	} else {
+		vec3 unit_direction = normalized(r.direction);
+		t = 0.5 * (y(unit_direction) + 1.0);
+		return add(
+			multiply_d(color_new(1.0, 1.0, 1.0), (1.0 - t)),
+			multiply_d(color_new(0.5, 0.7, 1.0), t)
+		);
+	}
 }
 
 int main(void) {
