@@ -7,12 +7,8 @@ typedef struct vec3 {
 
 vec3 vec3_new(double e1, double e2, double e3);
 
-double x(vec3 v);
-double y(vec3 v);
-double z(vec3 v);
-
-double at(vec3 v, int index);
-void update(vec3 *v, int index, double e);
+double at_index(vec3 v, int index);
+void update_index(vec3 *v, int index, double e);
 
 vec3 negative(vec3 v);
 double magnitude(vec3 v);

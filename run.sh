@@ -2,5 +2,5 @@
 mkdir -p results
 pushd results
 ../build/main
-open image.ppm
+open render.ppm
 popd
