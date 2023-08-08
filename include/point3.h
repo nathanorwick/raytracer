@@ -3,7 +3,13 @@
 
 #include "vec3.h"
 
-typedef struct vec3 point3;
+#define point3_new vec3_new
+
+typedef vec3 point3;
+
+double x(vec3 v);
+double y(vec3 v);
+double z(vec3 v);
 
 /* See "vec3.h" for more API */
 

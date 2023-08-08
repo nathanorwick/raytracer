@@ -4,7 +4,9 @@
 #include "vec3.h"
 #include "stdio.h"
 
-typedef struct vec3 color;
+#define color_new vec3_new
+
+typedef vec3 color;
 
 int r(color point_color);
 int g(color point_color);
