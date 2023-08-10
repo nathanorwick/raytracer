@@ -1,6 +1,8 @@
 #include "color.h"
 #include <stdio.h>
 
+color (*color_new)(double e1, double e2, double e3) = vec3_new;
+
 int r(color color_pixel) {
 	int r = 255.999 * at_index(color_pixel, 0);
 	return r;

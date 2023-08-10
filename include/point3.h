@@ -3,9 +3,9 @@
 
 #include "vec3.h"
 
-#define point3_new vec3_new
-
 typedef vec3 point3;
+
+point3 (*point3_new)(double e1, double e2, double e3);
 
 double x(vec3 v);
 double y(vec3 v);
