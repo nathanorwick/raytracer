@@ -10,8 +10,10 @@ add_compile_options(
 
 add_library(raytracer
 	${PROJECT_SOURCE_DIR}/src/color.c
+	${PROJECT_SOURCE_DIR}/src/hittable.c
 	${PROJECT_SOURCE_DIR}/src/point3.c
 	${PROJECT_SOURCE_DIR}/src/ray.c
+	${PROJECT_SOURCE_DIR}/src/sphere.c
 	${PROJECT_SOURCE_DIR}/src/vec3.c
 )
 
