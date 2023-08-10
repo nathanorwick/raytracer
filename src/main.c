@@ -1,7 +1,9 @@
 #include "color.h"
+#include "hittable_list.h"
+#include "hittable.h"
 #include "point3.h"
 #include "ray.h"
-#include "vec3.h"
+#include "sphere.h"
 #include <math.h>
 #include <stdbool.h>
 #include <stdio.h>
@@ -11,40 +13,30 @@
 #define IMAGE_WIDTH 1920
 #define IMAGE_HEIGHT (int) (IMAGE_WIDTH / ASPECT_RATIO)
 
-double hit_sphere(point3 center, double radius, ray r) {
-    vec3 oc = subtract(r.origin, center);
-	double a = dot(r.direction, r.direction);
-	double half_b = dot(oc, r.direction);
-	double c = dot(oc, oc) - radius * radius;
-	double discriminant = half_b * half_b - a * c;
-	if (discriminant < 0)
-		return -1.0;
-	else
-		return (-1 * half_b - sqrt(discriminant)) / a;
-}
-
-color ray_color(ray r) {
-	double t = hit_sphere(point3_new(0, 0, -1), 0.5, r);
-	if (t > 0.0) {
-	    vec3 N = normalized(subtract
-			(ray_at(r, t),
-			vec3_new(0, 0, -1))
-		);
-		return multiply_d(
-			color_new(x(N) + 1, y(N) + 1, z(N) + 1),
+color ray_color(ray r, hittable_list *world) {
+    hit_record rec;
+    if (sphere_list_hit(world, r, 0, INFINITY, &rec)) {
+        return multiply_d(
+			add(rec.normal, color_new(1, 1, 1)),
 			0.5
 		);
-	} else {
-		vec3 unit_direction = normalized(r.direction);
-		t = 0.5 * (y(unit_direction) + 1.0);
-		return add(
-			multiply_d(color_new(1.0, 1.0, 1.0), (1.0 - t)),
-			multiply_d(color_new(0.5, 0.7, 1.0), t)
-		);
-	}
+    }
+    vec3 unit_direction = normalized(r.direction);
+    double t = 0.5 * (y(unit_direction) + 1.0);
+    return add(
+		multiply_d(color_new(1.0, 1.0, 1.0), (1.0 -t)),
+		multiply_d(color_new(0.5, 0.7, 1.0), t)
+	);
 }
 
 int main(void) {
+	/* World */
+	hittable_list *world = hittable_list_new();
+	sphere sphere1 = sphere_new(point3_new(0, 0, -1), 0.5);
+	sphere sphere2 = sphere_new(point3_new(0, -100.5, -1), 100);
+	vec_push_back(world->objects, &sphere1);
+	vec_push_back(world->objects, &sphere2);
+
 	/* Camera */
 	double viewport_height = 2.0;
 	double viewport_width = ASPECT_RATIO * viewport_height;
@@ -76,7 +68,7 @@ int main(void) {
 					origin
 				)
 			);
-			color pixel_color = ray_color(r);
+			color pixel_color = ray_color(r, world);
 			write_color(image, pixel_color);
 		}
 	}
