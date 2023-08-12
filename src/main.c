@@ -62,5 +62,6 @@ int main(void) {
 	
 	fprintf(stdout, "\nDone.\n");
 	fclose(image);
+	hittable_list_free(world);
 	return EXIT_SUCCESS;
 }
