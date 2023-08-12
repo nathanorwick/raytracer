@@ -8,11 +8,7 @@ typedef vec3 color;
 
 color (*color_new)(double e1, double e2, double e3);
 
-int r(color point_color);
-int g(color point_color);
-int b(color point_color);
-
-void write_color(FILE *out, color pixel);
+void write_color(FILE *out, color pixel, int samples_per_pixel);
 
 /* See "vec3.h" for more API */
 
