@@ -1,21 +1,22 @@
 #include "color.h"
+#include "utility.h"
 #include <stdio.h>
 
-int r(color color_pixel) {
-	int r = 255.999 * at_index(color_pixel, 0);
-	return r;
-}
+color (*color_new)(double e1, double e2, double e3) = vec3_new;
 
-int g(color color_pixel) {
-	int g = 255.999 * at_index(color_pixel, 1);
-	return g;
-}
+void write_color(FILE *out, color color_pixel, int samples_per_pixel) {
+	double r = at_index(color_pixel, 0);
+	double g = at_index(color_pixel, 1);
+	double b = at_index(color_pixel, 2);
+	
+	double scale = 1.0 / samples_per_pixel;
+	r *= scale;
+	g *= scale;
+	b *= scale;
 
-int b(color color_pixel) {
-	int b = 255.999 * at_index(color_pixel, 2);
-	return b;
-}
+	r = 256 * clamp(r, 0.0, 0.999);
+	g = 256 * clamp(g, 0.0, 0.999);
+	b = 256 * clamp(b, 0.0, 0.999);
 
-void write_color(FILE *out, color color_pixel) {
-	fprintf(out, "%d %d %d\n", r(color_pixel), g(color_pixel), b(color_pixel));
+	fprintf(out, "%d %d %d\n", (int) r, (int) g, (int) b);
 }
