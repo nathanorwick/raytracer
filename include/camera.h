@@ -18,6 +18,6 @@ typedef struct camera {
 
 camera camera_new(void);
 
-ray get_ray(camera cam, double u, double v);
+ray get_ray(const camera cam, const double u, const double v);
 
 #endif

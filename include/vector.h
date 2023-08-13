@@ -56,7 +56,7 @@ bool vec_push_back(struct vector *v, void *value);
  * @param v struct vector *.
  * @return int length.
  */
-int vec_length(struct vector *v);
+int vec_length(const struct vector *v);
 
 /**
  * @brief vec_at() - access the specified index of the vector.
@@ -70,7 +70,7 @@ int vec_length(struct vector *v);
  * @param index int.
  * @return entry pointer or NULL.
  */
-void *vec_at(struct vector *v, int index);
+void *vec_at(const struct vector *v, const int index);
 
 /**
  * @brief vec_empty() - check if the vector is empty.
@@ -78,7 +78,7 @@ void *vec_at(struct vector *v, int index);
  * @param v struct vector *.
  * @return bool empty status.
  */
-bool vec_empty(struct vector *v);
+bool vec_empty(const struct vector *v);
 
 /**
  * @brief vec_clear() - clear the values in the vector.

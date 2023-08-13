@@ -48,11 +48,11 @@ bool vec_push_back(struct vector *v, void *value) {
 	}
 }
 
-int vec_length(struct vector *v) {
+int vec_length(const struct vector *v) {
 	return (v == NULL) ? 0 : v->current_length;
 }
 
-void *vec_at(struct vector *v, int index) {
+void *vec_at(const struct vector *v, const int index) {
 	if (v != NULL && index >= 0 && index < v->current_length) {
 		return v->values[index];
 	} else {
@@ -61,7 +61,7 @@ void *vec_at(struct vector *v, int index) {
 	}
 }
 
-bool vec_empty(struct vector *v) {
+bool vec_empty(const struct vector *v) {
 	return (v == NULL) ? true : v->current_length == 0;
 }
 

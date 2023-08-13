@@ -3,9 +3,9 @@
 #include <math.h>
 #include <stdio.h>
 
-color (*color_new)(double e1, double e2, double e3) = vec3_new;
+color (*color_new)(const double e1, const double e2, const double e3) = vec3_new;
 
-void write_color(FILE *out, color color_pixel, int samples_per_pixel) {
+void write_color(FILE *out, const color color_pixel, const int samples_per_pixel) {
 	double r = at_index(color_pixel, 0);
 	double g = at_index(color_pixel, 1);
 	double b = at_index(color_pixel, 2);
