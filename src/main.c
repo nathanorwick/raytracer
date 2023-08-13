@@ -13,15 +13,25 @@
 #include <stdlib.h>
 
 #define SAMPLES_PER_PIXEL 100
+#define MAX_DEPTH 50
 
-color ray_color(ray r, hittable_list *world) {
+color ray_color(ray r, hittable_list *world, int depth) {
     hit_record rec;
-    if (sphere_list_hit(world, r, 0, INFINITY, &rec)) {
+
+	if (depth <= 0)
+		return color_new(0, 0, 0);
+
+    if (sphere_list_hit(world, r, 0.001, INFINITY, &rec)) {
+        point3 target = add(
+			rec.p,
+			random_in_hemisphere(rec.normal)
+		);
         return multiply_d(
-			add(rec.normal, color_new(1, 1, 1)),
+			ray_color(ray_new(rec.p, subtract(target, rec.p)), world, depth - 1),
 			0.5
 		);
     }
+
     vec3 unit_direction = normalized(r.direction);
     double t = 0.5 * (y(unit_direction) + 1.0);
     return add(
@@ -33,6 +43,10 @@ color ray_color(ray r, hittable_list *world) {
 int main(void) {
 	/* World */
 	hittable_list *world = hittable_list_new();
+
+	if (!(world && world->objects))
+		return EXIT_FAILURE;
+
 	sphere sphere1 = sphere_new(point3_new(0, 0, -1), 0.5);
 	sphere sphere2 = sphere_new(point3_new(0, -100.5, -1), 100);
 	vec_push_back(world->objects, &sphere1);
@@ -48,14 +62,17 @@ int main(void) {
 	for (int j = IMAGE_HEIGHT - 1; j >= 0; --j) {
 		fprintf(stdout, "\rScanlines remaining: %d ", j);
 		fflush(stdout);
+
 		for (int i = 0; i < IMAGE_WIDTH; ++i) {
 			color pixel_color = color_new(0, 0, 0);
+
 			for (int s = 0; s < SAMPLES_PER_PIXEL; ++s) {
 				double u = (i + random_double()) / (IMAGE_WIDTH - 1);
 				double v = (j + random_double()) / (IMAGE_HEIGHT - 1);
 				ray r = get_ray(cam, u, v);
-				pixel_color = add(pixel_color, ray_color(r, world));
+				pixel_color = add(pixel_color, ray_color(r, world, MAX_DEPTH));
 			}
+
 			write_color(image, pixel_color, SAMPLES_PER_PIXEL);
 		}
 	}

@@ -5,20 +5,28 @@ add_compile_options(
     -Wall -Wextra -Wpedantic -Werror
     -fsanitize={address,undefined}
     -Wshadow -Wpointer-arith -Wcast-align
-    -std=c11 -g -O2
+    -std=c11 -g -O3
+)
+
+set(SOURCE_PREFIX
+	${PROJECT_SOURCE_DIR}/src
+)
+
+set(INCLUDE_PREFIX
+	${PROJECT_SOURCE_DIR}/include
 )
 
 set(SOURCE_FILES
-	${PROJECT_SOURCE_DIR}/src/camera.c
-	${PROJECT_SOURCE_DIR}/src/color.c
-	${PROJECT_SOURCE_DIR}/src/hittable.c
-	${PROJECT_SOURCE_DIR}/src/hittable_list.c
-	${PROJECT_SOURCE_DIR}/src/point3.c
-	${PROJECT_SOURCE_DIR}/src/ray.c
-	${PROJECT_SOURCE_DIR}/src/sphere.c
-	${PROJECT_SOURCE_DIR}/src/utility.c
-	${PROJECT_SOURCE_DIR}/src/vector.c
-	${PROJECT_SOURCE_DIR}/src/vec3.c
+	${SOURCE_PREFIX}/camera.c
+	${SOURCE_PREFIX}/color.c
+	${SOURCE_PREFIX}/hittable.c
+	${SOURCE_PREFIX}/hittable_list.c
+	${SOURCE_PREFIX}/point3.c
+	${SOURCE_PREFIX}/ray.c
+	${SOURCE_PREFIX}/sphere.c
+	${SOURCE_PREFIX}/utility.c
+	${SOURCE_PREFIX}/vector.c
+	${SOURCE_PREFIX}/vec3.c
 )
 
 add_library(raytracer
@@ -26,15 +34,15 @@ add_library(raytracer
 )
 
 target_include_directories(raytracer PUBLIC
-	${PROJECT_SOURCE_DIR}/include
+	${INCLUDE_PREFIX}
 )
 
 add_executable(main
-    ${PROJECT_SOURCE_DIR}/src/main.c
+	${SOURCE_PREFIX}/main.c
 )
 
 target_include_directories(main PUBLIC
-    ${PROJECT_SOURCE_DIR}/include
+	${INCLUDE_PREFIX}
 )
 
 target_link_libraries(main PUBLIC

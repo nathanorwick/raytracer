@@ -1,5 +1,7 @@
+#include "utility.h"
 #include "vec3.h"
 #include <math.h>
+#include <stdbool.h>
 
 vec3 vec3_new(double e1, double e2, double e3) {
 	vec3 v = { {e1, e2, e3} };
@@ -68,4 +70,35 @@ vec3 cross(vec3 u, vec3 v) {
 		(u.e)[2] * (v.e)[0] - (u.e)[0] * (v.e)[2],
 		(u.e)[0] * (v.e)[1] - (u.e)[1] * (v.e)[0]
 	);
+}
+
+vec3 random_vec3(void) {
+	return vec3_new(random_double(), random_double(), random_double());
+}
+
+vec3 random_vec3_range(double min, double max) {
+	return vec3_new(
+		random_double_range(min, max), random_double_range(min, max), random_double_range(min, max)
+	);
+}
+
+vec3 random_vec3_in_unit_sphere(void) {
+	while(true) {
+		vec3 p = random_vec3_range(-1, 1);
+		if (dot(p, p) >= 1)
+			continue;
+		return p;
+	}
+}
+
+vec3 random_unit_vector(void) {
+	return normalized(random_vec3_in_unit_sphere());
+}
+
+vec3 random_in_hemisphere(vec3 normal) {
+    vec3 in_unit_sphere = random_vec3_in_unit_sphere();
+    if (dot(in_unit_sphere, normal) > 0.0)
+        return in_unit_sphere;
+    else
+        return negative(in_unit_sphere);
 }

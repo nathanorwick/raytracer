@@ -25,4 +25,11 @@ vec3 subtract(vec3 u, vec3 v);
 double dot(vec3 u, vec3 v);
 struct vec3 cross(vec3 u, vec3 v);
 
+vec3 random_vec3(void);
+vec3 random_vec3_range(double min, double max);
+vec3 random_vec3_in_unit_sphere(void);
+
+vec3 random_unit_vector(void);
+vec3 random_in_hemisphere(vec3 normal);
+
 #endif
