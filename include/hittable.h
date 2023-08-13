@@ -12,7 +12,7 @@ typedef struct hit_record {
 	double front_face;
 } hit_record;
 
-void set_face_normal(hit_record *rec, ray r, vec3 outward_normal);
+void set_face_normal(hit_record *rec, const ray r, const vec3 outward_normal);
 
 /* Define `object_hit` in the file including this, e.g. `sphere_hit` */
 

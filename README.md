@@ -19,6 +19,20 @@ This will open the rendered image after, which will also be stored as `results/r
 
 For more documentation, see the header files under `include/`. TODO - add more documentation.
 
+# Future Ideas
+
+Changing the image format:
+
+`JPG` or `PNG` rather than `PPM`, maybe using **stb**.
+
+Parallelization:
+
+**OpenMP** or **CUDA** could both be looked into.
+
+Optimization:
+
+Many structs are passed by value, rather than by reference. This is convenient for many reasons. Most of the structs are small, so the additional `malloc` & `free` calls may not be worth it. This may be worth it for the larger structs (as done for the `hittable_list`).
+
 # References
 
 - https://raytracing.github.io/books/RayTracingInOneWeekend.html

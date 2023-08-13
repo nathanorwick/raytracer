@@ -12,9 +12,9 @@ typedef struct sphere {
 	double radius;
 } sphere;
 
-sphere sphere_new(point3 center, double radius);
+sphere sphere_new(const point3 center, const double radius);
 
-bool sphere_hit(sphere s, ray r, double t_min, double t_max, hit_record *rec);
-bool sphere_list_hit(hittable_list *list, ray r, double t_min, double t_max, hit_record *rec);
+bool sphere_hit(const sphere s, const ray r, const double t_min, const double t_max, hit_record *rec);
+bool sphere_list_hit(const hittable_list *list, const ray r, const double t_min, const double t_max, hit_record *rec);
 
 #endif

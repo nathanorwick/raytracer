@@ -20,7 +20,7 @@ camera camera_new(void) {
 	return cam;
 }
 
-ray get_ray(camera cam, double u, double v) {
+ray get_ray(const camera cam, const double u, const double v) {
 	return ray_new(
 		cam.origin,
 		subtract(

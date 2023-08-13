@@ -6,12 +6,12 @@
 #include <math.h>
 #include <stdbool.h>
 
-sphere sphere_new(point3 center, double radius) {
+sphere sphere_new(const point3 center, const double radius) {
 	sphere s = { center, radius };
 	return s;
 }
 
-bool sphere_hit(sphere s, ray r, double t_min, double t_max, hit_record *rec) {
+bool sphere_hit(const sphere s, const ray r, const double t_min, const double t_max, hit_record *rec) {
     vec3 oc = subtract(r.origin, s.center);
     double a = dot(r.direction, r.direction);
     double half_b = dot(oc, r.direction);
@@ -40,7 +40,7 @@ bool sphere_hit(sphere s, ray r, double t_min, double t_max, hit_record *rec) {
     return true;
 }
 
-bool sphere_list_hit(hittable_list *list, ray r, double t_min, double t_max, hit_record *rec) {
+bool sphere_list_hit(const hittable_list *list, const ray r, const double t_min, const double t_max, hit_record *rec) {
 	hit_record temp_rec;
     bool hit_anything = false;
     double closest_so_far = t_max;

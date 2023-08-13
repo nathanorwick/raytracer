@@ -9,8 +9,8 @@ typedef struct ray {
 	vec3 direction;
 } ray;
 
-ray ray_new(point3 origin, vec3 direction);
+ray ray_new(const point3 origin, const vec3 direction);
 
-point3 ray_at(ray r, double t);
+point3 ray_at(const ray r, const double t);
 
 #endif
