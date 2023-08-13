@@ -23,8 +23,8 @@ color ray_color(ray r, hittable_list *world, int depth) {
 
     if (sphere_list_hit(world, r, 0.001, INFINITY, &rec)) {
         point3 target = add(
-			add(rec.p, rec.normal),
-			random_vec3_in_unit_sphere()
+			rec.p,
+			random_in_hemisphere(rec.normal)
 		);
         return multiply_d(
 			ray_color(ray_new(rec.p, subtract(target, rec.p)), world, depth - 1),

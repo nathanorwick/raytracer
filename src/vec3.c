@@ -90,3 +90,15 @@ vec3 random_vec3_in_unit_sphere(void) {
 		return p;
 	}
 }
+
+vec3 random_unit_vector(void) {
+	return normalized(random_vec3_in_unit_sphere());
+}
+
+vec3 random_in_hemisphere(vec3 normal) {
+    vec3 in_unit_sphere = random_vec3_in_unit_sphere();
+    if (dot(in_unit_sphere, normal) > 0.0)
+        return in_unit_sphere;
+    else
+        return negative(in_unit_sphere);
+}
