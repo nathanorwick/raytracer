@@ -6,7 +6,7 @@
 #include "vec3.h"
 
 #define ASPECT_RATIO (16.0 / 9.0)
-#define IMAGE_WIDTH 1920
+#define IMAGE_WIDTH 400
 #define IMAGE_HEIGHT (int) (IMAGE_WIDTH / ASPECT_RATIO)
 
 typedef struct camera {
