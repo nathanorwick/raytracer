@@ -5,7 +5,7 @@ add_compile_options(
     -Wall -Wextra -Wpedantic -Werror
     -fsanitize={address,undefined}
     -Wshadow -Wpointer-arith -Wcast-align
-    -std=c11 -g -O2
+    -std=c11 -g -O3
 )
 
 set(SOURCE_PREFIX
