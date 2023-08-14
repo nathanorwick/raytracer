@@ -1,6 +1,8 @@
 #ifndef VEC3_H
 #define VEC3_H
 
+#include <stdbool.h>
+
 typedef struct vec3 {
 	double e[3];
 } vec3;
@@ -21,6 +23,7 @@ vec3 divide_d(const vec3 v, const double d);
 
 vec3 add(const vec3 u, const vec3 v);
 vec3 subtract(const vec3 u, const vec3 v);
+vec3 multiply(const vec3 u, const vec3 v);
 
 double dot(const vec3 u, const vec3 v);
 struct vec3 cross(const vec3 u, const vec3 v);
@@ -31,5 +34,9 @@ vec3 random_vec3_in_unit_sphere(void);
 
 vec3 random_unit_vector(void);
 vec3 random_in_hemisphere(const vec3 normal);
+
+bool near_zero(const vec3 v);
+
+vec3 reflect(const vec3 v, const vec3 n);
 
 #endif

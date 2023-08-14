@@ -60,6 +60,10 @@ vec3 subtract(const vec3 u, const vec3 v) {
 	return add(u, negative(v));
 }
 
+vec3 multiply(const vec3 u, const vec3 v) {
+	return vec3_new((u.e)[0] * (v.e)[0], (u.e)[1] * (v.e)[1], (u.e)[2] * (v.e)[2]);
+}
+
 double dot(const vec3 u, const vec3 v) {
 	return (u.e)[0] * (v.e)[0] + (u.e)[1] * (v.e)[1] + (u.e)[2] * (v.e)[2];
 }
@@ -101,4 +105,19 @@ vec3 random_in_hemisphere(const vec3 normal) {
         return in_unit_sphere;
     else
         return negative(in_unit_sphere);
+}
+
+bool near_zero(const vec3 v) {
+	const double s = 1e-8;
+	return (fabs((v.e)[0]) < s) && (fabs((v.e)[1]) < s) && (fabs((v.e)[2]) < s);
+}
+
+vec3 reflect(const vec3 v, const vec3 n) {
+	return subtract(
+		v,
+		multiply_d(
+			multiply_d(n, dot(v, n)),
+			2
+		)
+	);
 }
