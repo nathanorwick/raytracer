@@ -6,6 +6,7 @@
 #include "ray.h"
 #include "sphere.h"
 #include "utility.h"
+#include "vec3.h"
 
 #include <math.h>
 #include <stdbool.h>
@@ -22,14 +23,11 @@ color ray_color(ray r, hittable_list *world, int depth) {
 		return color_new(0, 0, 0);
 
     if (sphere_list_hit(world, r, 0.001, INFINITY, &rec)) {
-        point3 target = add(
-			rec.p,
-			random_in_hemisphere(rec.normal)
-		);
-        return multiply_d(
-			ray_color(ray_new(rec.p, subtract(target, rec.p)), world, depth - 1),
-			0.5
-		);
+        ray scattered;
+        color attenuation;
+        if (rec.mat.scatter(rec.mat, r, rec, &attenuation, &scattered))
+            return multiply(attenuation, ray_color(scattered, world, depth - 1));
+        return color_new(0, 0, 0);
     }
 
     vec3 unit_direction = normalized(r.direction);
@@ -47,10 +45,29 @@ int main(void) {
 	if (!(world && world->objects))
 		return EXIT_FAILURE;
 
-	sphere sphere1 = sphere_new(point3_new(0, 0, -1), 0.5);
-	sphere sphere2 = sphere_new(point3_new(0, -100.5, -1), 100);
+	/* write a material_new(enum MATERIAL); */
+	material material_ground;
+	material_ground.albedo = color_new(0.8, 0.8, 0.0);
+	material_ground.scatter = lambertian_scatter;
+	material material_center;
+	material_center.albedo = color_new(0.7, 0.3, 0.3);
+	material_center.scatter = lambertian_scatter;
+	material material_left;
+	material_left.albedo = color_new(0.8, 0.8, 0.8);
+	material_left.scatter = metal_scatter;
+	material material_right;
+	material_right.albedo = color_new(0.8, 0.6, 0.2);
+	material_right.scatter = metal_scatter;
+
+	sphere sphere1 = sphere_new(point3_new(0.0, -100.5, -1.0), 100.0, material_ground);
+	sphere sphere2 = sphere_new(point3_new(0.0, 0.0, -1.0), 0.5, material_center);
+	sphere sphere3 = sphere_new(point3_new(-1.0, 0.0, -1.0), 0.5, material_left);
+	sphere sphere4 = sphere_new(point3_new(1.0, 0.0, -1.0), 0.5, material_right);
+
 	vec_push_back(world->objects, &sphere1);
 	vec_push_back(world->objects, &sphere2);
+	vec_push_back(world->objects, &sphere3);
+	vec_push_back(world->objects, &sphere4);
 
 	/* Camera */
 	camera cam = camera_new();

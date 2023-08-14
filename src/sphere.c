@@ -1,13 +1,14 @@
 #include "hittable.h"
 #include "hittable_list.h"
+#include "material.h"
 #include "point3.h"
 #include "ray.h"
 #include "sphere.h"
 #include <math.h>
 #include <stdbool.h>
 
-sphere sphere_new(const point3 center, const double radius) {
-	sphere s = { center, radius };
+sphere sphere_new(const point3 center, const double radius, material m) {
+	sphere s = { center, radius, m };
 	return s;
 }
 
@@ -36,6 +37,7 @@ bool sphere_hit(const sphere s, const ray r, const double t_min, const double t_
 			s.radius
 	);
 	set_face_normal(rec, r, outward_normal);
+	rec->mat = s.mat;
 
     return true;
 }

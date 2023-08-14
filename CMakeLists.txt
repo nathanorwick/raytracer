@@ -21,6 +21,7 @@ set(SOURCE_FILES
 	${SOURCE_PREFIX}/color.c
 	${SOURCE_PREFIX}/hittable.c
 	${SOURCE_PREFIX}/hittable_list.c
+	${SOURCE_PREFIX}/material.c
 	${SOURCE_PREFIX}/point3.c
 	${SOURCE_PREFIX}/ray.c
 	${SOURCE_PREFIX}/sphere.c
