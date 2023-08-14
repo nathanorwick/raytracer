@@ -10,10 +10,13 @@ struct hit_record;
 
 typedef struct material {
 	color albedo;
+	double fuzz;
 	bool (*scatter)(const struct material mat, const ray r_in, const struct hit_record rec, color *attenuation, ray *scattered);
 } material;
 
-/* Scatter functions */
+enum materials {LAMBERTIAN, METAL};
+
+material material_new(enum materials material, color albedo, double fuzz);
 
 bool lambertian_scatter(const material mat, const ray r_in, const struct hit_record rec, color *attenuation, ray *scattered);
 

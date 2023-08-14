@@ -45,19 +45,10 @@ int main(void) {
 	if (!(world && world->objects))
 		return EXIT_FAILURE;
 
-	/* write a material_new(enum MATERIAL); */
-	material material_ground;
-	material_ground.albedo = color_new(0.8, 0.8, 0.0);
-	material_ground.scatter = lambertian_scatter;
-	material material_center;
-	material_center.albedo = color_new(0.7, 0.3, 0.3);
-	material_center.scatter = lambertian_scatter;
-	material material_left;
-	material_left.albedo = color_new(0.8, 0.8, 0.8);
-	material_left.scatter = metal_scatter;
-	material material_right;
-	material_right.albedo = color_new(0.8, 0.6, 0.2);
-	material_right.scatter = metal_scatter;
+	material material_ground = material_new(LAMBERTIAN, color_new(0.8, 0.8, 0.0), 0.0);
+	material material_center = material_new(LAMBERTIAN, color_new(0.7, 0.3, 0.3), 0.3);	
+	material material_left = material_new(METAL, color_new(0.8, 0.8, 0.8), 0.3);
+	material material_right = material_new(METAL, color_new(0.8, 0.6, 0.2), 1.0);
 
 	sphere sphere1 = sphere_new(point3_new(0.0, -100.5, -1.0), 100.0, material_ground);
 	sphere sphere2 = sphere_new(point3_new(0.0, 0.0, -1.0), 0.5, material_center);
