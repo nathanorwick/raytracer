@@ -45,10 +45,10 @@ int main(void) {
 	if (!(world && world->objects))
 		return EXIT_FAILURE;
 
-	material material_ground = material_new(LAMBERTIAN, color_new(0.8, 0.8, 0.0), 0.0);
-	material material_center = material_new(LAMBERTIAN, color_new(0.7, 0.3, 0.3), 0.3);	
-	material material_left = material_new(METAL, color_new(0.8, 0.8, 0.8), 0.3);
-	material material_right = material_new(METAL, color_new(0.8, 0.6, 0.2), 1.0);
+	material material_ground = lambertian_new(color_new(0.8, 0.8, 0.0));
+	material material_center = dielectric_new(1.5);	
+	material material_left = dielectric_new(1.5);
+	material material_right = metal_new(color_new(0.8, 0.6, 0.2), 1.0);
 
 	sphere sphere1 = sphere_new(point3_new(0.0, -100.5, -1.0), 100.0, material_ground);
 	sphere sphere2 = sphere_new(point3_new(0.0, 0.0, -1.0), 0.5, material_center);

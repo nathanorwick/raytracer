@@ -33,6 +33,11 @@ vec3 normalized(const vec3 v) {
 	return vec3_new((v.e)[0] / mag, (v.e)[1] / mag, (v.e)[2] / mag);
 }
 
+bool near_zero(const vec3 v) {
+	const double s = 1e-8;
+	return (fabs((v.e)[0]) < s) && (fabs((v.e)[1]) < s) && (fabs((v.e)[2]) < s);
+}
+
 vec3 add_d(const vec3 v, const double d) {
 	return vec3_new((v.e)[0] + d, (v.e)[1] + d, (v.e)[2] + d);
 }
@@ -107,11 +112,6 @@ vec3 random_in_hemisphere(const vec3 normal) {
         return negative(in_unit_sphere);
 }
 
-bool near_zero(const vec3 v) {
-	const double s = 1e-8;
-	return (fabs((v.e)[0]) < s) && (fabs((v.e)[1]) < s) && (fabs((v.e)[2]) < s);
-}
-
 vec3 reflect(const vec3 v, const vec3 n) {
 	return subtract(
 		v,
@@ -120,4 +120,17 @@ vec3 reflect(const vec3 v, const vec3 n) {
 			2
 		)
 	);
+}
+
+vec3 refract(const vec3 uv, const vec3 n, double etai_over_etat) {
+	double cos_theta = fmin(dot(negative(uv), n), 1.0);
+	vec3 r_out_perp =  multiply_d(
+		add(uv, multiply_d(n, cos_theta)),
+		etai_over_etat
+	);
+	vec3 r_out_parallel = multiply_d(
+		n,
+		-1 * sqrt(fabs(1.0 - dot(r_out_perp, r_out_perp)))
+	);
+	return add(r_out_perp, r_out_parallel);
 }
