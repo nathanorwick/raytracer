@@ -52,17 +52,21 @@ For more documentation, see the header files under `include/`. TODO - add more d
 
 # Future Ideas
 
-Changing the image format:
+### Changing the image format:
 
 `JPG` or `PNG` rather than `PPM`, maybe using **stb**.
 
-Parallelization:
+### Parallelization:
 
 **OpenMP** or **CUDA** could both be looked into.
 
-Optimization:
+### Optimization:
 
 Many structs are passed by value, rather than by reference. This is convenient for many reasons. Most of the structs are small, so the additional `malloc` & `free` calls may not be worth it. This may be worth it for the larger structs (as done for the `hittable_list`).
+
+### Other Changes:
+
+*Ray Tracing in One Weekend* seems to have been updated to clear up `main` & leverage the `camera` object more since I wrote this. It would be more readable to do similarly in this project, so that `main.c` is less packed.
 
 # References
 
