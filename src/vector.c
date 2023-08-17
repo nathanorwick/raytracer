@@ -29,6 +29,8 @@ struct vector *vec_new(void) {
 
 void vec_free(struct vector *v) {
 	if (v != NULL) {
+		for (int i = 0; i < v->current_length; ++i)
+			free(v->values[i]);
 		free(v->values);
 		free(v);
 	}
