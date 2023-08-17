@@ -45,7 +45,7 @@ bool metal_scatter(const material mat, const ray r_in, const struct hit_record r
 
 	*scattered = ray_new(
 		rec.p,
-		add(reflected, multiply_d(random_vec3_in_unit_sphere(), mat.fuzz))
+		add(reflected, multiply_d(random_in_unit_sphere(), mat.fuzz))
 	);
 
 	*attenuation = mat.albedo;

@@ -91,7 +91,7 @@ vec3 random_vec3_range(const double min, const double max) {
 	);
 }
 
-vec3 random_vec3_in_unit_sphere(void) {
+vec3 random_in_unit_sphere(void) {
 	while(true) {
 		vec3 p = random_vec3_range(-1, 1);
 		if (dot(p, p) >= 1)
@@ -101,15 +101,24 @@ vec3 random_vec3_in_unit_sphere(void) {
 }
 
 vec3 random_unit_vector(void) {
-	return normalized(random_vec3_in_unit_sphere());
+	return normalized(random_in_unit_sphere());
 }
 
 vec3 random_in_hemisphere(const vec3 normal) {
-    vec3 in_unit_sphere = random_vec3_in_unit_sphere();
+    vec3 in_unit_sphere = random_in_unit_sphere();
     if (dot(in_unit_sphere, normal) > 0.0)
         return in_unit_sphere;
     else
         return negative(in_unit_sphere);
+}
+
+vec3 random_in_unit_disk(void) {
+	while (true) {
+		vec3 p = vec3_new(random_double_range(-1, 1), random_double_range(-1, 1), 0);
+		if (dot(p, p) >= 1) 
+			continue;
+		return p;
+	}
 }
 
 vec3 reflect(const vec3 v, const vec3 n) {
