@@ -1,7 +1,7 @@
 
 # Overview
 
-This is a simple ray tracer program, based off of **Ray Tracing in One Weekend**. The referenced material uses **C++** to program the ray tracer, whereas this project is written in **C**.
+This is a simple ray tracer program, based off of *Ray Tracing in One Weekend* by **Peter Shirley**. The referenced material uses **C++** to program the ray tracer, whereas this project is written in **C**.
 
 # Project Setup
 
