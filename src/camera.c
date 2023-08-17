@@ -5,7 +5,7 @@
 #include "vec3.h"
 #include <math.h>
 
-camera camera_new(double vfov, double aspect_ratio) {
+camera camera_new(point3 lookfrom, point3 lookat, vec3 vup, double vfov, double aspect_ratio) {
 	camera cam;
 
 	double theta = degrees_to_radians(vfov);
@@ -13,27 +13,26 @@ camera camera_new(double vfov, double aspect_ratio) {
 	double viewport_height = 2.0 * h;
 	double viewport_width = aspect_ratio * viewport_height;
 
-	double focal_length = 1.0;
+	vec3 w = normalized(subtract(lookfrom, lookat));
+	vec3 u = normalized(cross(vup, w));
+	vec3 v = cross(w, u);
 
-	cam.origin = point3_new(0, 0, 0);
-	cam.horizontal = vec3_new(viewport_width, 0, 0);
-	cam.vertical = vec3_new(0, viewport_height, 0);
-	cam.lower_left_corner = subtract(subtract(subtract(
-		cam.origin, divide_d(cam.horizontal, 2)), divide_d(cam.vertical, 2)), vec3_new(0, 0, focal_length)
+	cam.origin = lookfrom;
+	cam.horizontal = multiply_d(u, viewport_width);
+	cam.vertical = multiply_d(v, viewport_height);
+	cam.lower_left_corner = subtract(
+		subtract(subtract(cam.origin, multiply_d(cam.horizontal, 0.5)), multiply_d(cam.vertical, 0.5)),
+		w
 	);
 
 	return cam;
 }
 
-ray get_ray(const camera cam, const double u, const double v) {
+ray get_ray(const camera cam, const double s, const double t) {
 	return ray_new(
 		cam.origin,
 		subtract(
-			add(
-				add(cam.lower_left_corner, multiply_d(cam.horizontal, u)),
-				multiply_d(cam.vertical, v)
-			),
-			cam.origin
-		)
+			add(add(cam.lower_left_corner, multiply_d(cam.horizontal, s)), multiply_d(cam.vertical, t)),
+			cam.origin)
 	);
 }

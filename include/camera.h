@@ -16,7 +16,8 @@ typedef struct camera {
 	vec3 vertical;
 } camera;
 
-camera camera_new(double vfov, double aspect_ratio);
+/* vfov is the vertical fov in degrees (will be converted to radians inside) */
+camera camera_new(point3 lookfrom, point3 lookat, vec3 vup, double vfov, double aspect_ratio);
 
 ray get_ray(const camera cam, const double u, const double v);
 
