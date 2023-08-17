@@ -3,9 +3,9 @@ project(raytracer)
 
 add_compile_options(
     -Wall -Wextra -Wpedantic -Werror
-    -fsanitize={address,undefined}
-    -Wshadow -Wpointer-arith -Wcast-align
-    -std=c11 -g -O3
+	# -fsanitize={address,undefined} -g
+	# -Wshadow -Wpointer-arith -Wcast-align
+    -std=c11 -O3
 )
 
 set(SOURCE_PREFIX
@@ -48,6 +48,6 @@ target_include_directories(main PUBLIC
 
 target_link_libraries(main PUBLIC
 	raytracer
-    -fsanitize=address
-    -fsanitize=undefined
+	# -fsanitize=address
+	# -fsanitize=undefined
 )

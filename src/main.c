@@ -2,6 +2,7 @@
 #include "color.h"
 #include "hittable_list.h"
 #include "hittable.h"
+#include "image.h"
 #include "point3.h"
 #include "ray.h"
 #include "sphere.h"
@@ -12,9 +13,6 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
-
-#define SAMPLES_PER_PIXEL 100
-#define MAX_DEPTH 50
 
 color ray_color(ray r, hittable_list *world, int depth) {
     hit_record rec;
@@ -38,36 +36,81 @@ color ray_color(ray r, hittable_list *world, int depth) {
 	);
 }
 
+hittable_list *random_scene(void) {
+    hittable_list *world = hittable_list_new();
+
+	if (world == NULL || world->objects == NULL)
+		return NULL;
+
+    material ground_material = lambertian_new(color_new(0.5, 0.5, 0.5));
+    sphere *ground_sphere = malloc(sizeof(*ground_sphere));
+	*ground_sphere = sphere_new(point3_new(0,-1000,0), 1000, ground_material);
+	vec_push_back(world->objects, ground_sphere);
+
+    for (int a = -11; a < 11; a++) {
+        for (int b = -11; b < 11; b++) {
+            double choose_mat = random_double();
+            point3 center = point3_new(a + 0.9 * random_double(), 0.2, b + 0.9 * random_double());
+
+            if (magnitude(subtract(center, point3_new(4, 0.2, 0))) > 0.9) {
+                material sphere_material;
+				sphere *random_sphere = malloc(sizeof(*random_sphere));
+
+                if (choose_mat < 0.8) {
+                    // diffuse
+                    point3 albedo = multiply(random_vec3(), random_vec3());
+                    sphere_material = lambertian_new(albedo);
+					*random_sphere = sphere_new(center, 0.2, sphere_material);
+					vec_push_back(world->objects, &random_sphere);
+                } else if (choose_mat < 0.95) {
+                    // metal
+                    point3 albedo = random_vec3_range(0.5, 1);
+                    double fuzz = random_double_range(0, 0.5);
+                    sphere_material = metal_new(albedo, fuzz);
+                    *random_sphere = sphere_new(center, 0.2, sphere_material);
+					vec_push_back(world->objects, &random_sphere);
+                } else {
+                    // glass
+                    sphere_material = dielectric_new(1.5);
+					*random_sphere = sphere_new(center, 0.2, sphere_material);
+                }
+				
+				vec_push_back(world->objects, random_sphere);
+            }
+        }
+    }
+
+    material material1 = dielectric_new(1.5);
+	sphere *sphere1 = malloc(sizeof(*sphere1));
+    *sphere1 = sphere_new(point3_new(0, 1, 0), 1.0, material1);
+	vec_push_back(world->objects, sphere1);
+
+	material material2 = lambertian_new(color_new(0.4, 0.2, 0.1));
+	sphere *sphere2 = malloc(sizeof(*sphere2));
+	*sphere2 = sphere_new(point3_new(-4, 1, 0), 1.0, material2);
+	vec_push_back(world->objects, sphere2);
+
+    material material3 = metal_new(color_new(0.7, 0.6, 0.5), 0.0);
+	sphere *sphere3 = malloc(sizeof(*sphere3));
+    *sphere3 = sphere_new(point3_new(4, 1, 0), 1.0, material3);
+	vec_push_back(world->objects, sphere3);
+
+    return world;
+}
+
 int main(void) {
 	/* World */
-	hittable_list *world = hittable_list_new();
+	hittable_list *world = random_scene();
 
-	if (!(world && world->objects))
+	if (!world)
 		return EXIT_FAILURE;
 
-	material material_ground = lambertian_new(color_new(0.8, 0.8, 0.0));
-	material material_center = lambertian_new(color_new(0.1, 0.2, 0.5));
-	material material_left   = dielectric_new(1.5);
-	material material_right  = metal_new(color_new(0.8, 0.6, 0.2), 0.0);
-
-	sphere sphere1 = sphere_new(point3_new(0.0, -100.5, -1.0), 100.0, material_ground);
-	sphere sphere2 = sphere_new(point3_new(0.0, 0.0, -1.0), 0.5, material_center);
-	sphere sphere3 = sphere_new(point3_new(-1.0, 0.0, -1.0), 0.5, material_left);
-	sphere sphere4 = sphere_new(point3_new(-1.0, 0.0, -1.0), -0.45, material_left);
-	sphere sphere5 = sphere_new(point3_new(1.0, 0.0, -1.0), 0.5, material_right);
-
-	vec_push_back(world->objects, &sphere1);
-	vec_push_back(world->objects, &sphere2);
-	vec_push_back(world->objects, &sphere3);
-	vec_push_back(world->objects, &sphere4);
-	vec_push_back(world->objects, &sphere5);
-
 	/* Camera */
-	point3 lookfrom = point3_new(3, 3 ,2);
-	point3 lookat = point3_new(0, 0, -1);
+	point3 lookfrom = point3_new(13, 2, 3);
+	point3 lookat = point3_new(0, 0, 0);
 	vec3 vup = vec3_new(0, 1, 0);
-	double dist_to_focus = magnitude(subtract(lookfrom, lookat));
-	double aperture = 2.0;
+	double dist_to_focus = 10.0;
+	double aperture = 0.1;
 
 	camera cam = camera_new(lookfrom, lookat, vup, 20, ASPECT_RATIO, aperture, dist_to_focus);
 
@@ -95,6 +138,8 @@ int main(void) {
 	
 	fprintf(stdout, "\nDone.\n");
 	fclose(image);
+	for (int i = 0; i < vec_length(world->objects); ++i)
+		free(vec_at(world->objects, i));
 	hittable_list_free(world);
 	return EXIT_SUCCESS;
 }
