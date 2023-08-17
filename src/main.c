@@ -61,20 +61,18 @@ hittable_list *random_scene(void) {
                     point3 albedo = multiply(random_vec3(), random_vec3());
                     sphere_material = lambertian_new(albedo);
 					*random_sphere = sphere_new(center, 0.2, sphere_material);
-					vec_push_back(world->objects, &random_sphere);
                 } else if (choose_mat < 0.95) {
                     // metal
                     point3 albedo = random_vec3_range(0.5, 1);
                     double fuzz = random_double_range(0, 0.5);
                     sphere_material = metal_new(albedo, fuzz);
                     *random_sphere = sphere_new(center, 0.2, sphere_material);
-					vec_push_back(world->objects, &random_sphere);
                 } else {
                     // glass
                     sphere_material = dielectric_new(1.5);
 					*random_sphere = sphere_new(center, 0.2, sphere_material);
                 }
-				
+
 				vec_push_back(world->objects, random_sphere);
             }
         }
@@ -138,8 +136,6 @@ int main(void) {
 	
 	fprintf(stdout, "\nDone.\n");
 	fclose(image);
-	for (int i = 0; i < vec_length(world->objects); ++i)
-		free(vec_at(world->objects, i));
 	hittable_list_free(world);
 	return EXIT_SUCCESS;
 }
