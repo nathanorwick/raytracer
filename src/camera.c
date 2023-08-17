@@ -1,13 +1,18 @@
 #include "camera.h"
 #include "point3.h"
 #include "ray.h"
+#include "utility.h"
 #include "vec3.h"
+#include <math.h>
 
-camera camera_new(void) {
+camera camera_new(double vfov, double aspect_ratio) {
 	camera cam;
 
-	double viewport_height = 2.0;
-	double viewport_width = ASPECT_RATIO * viewport_height;
+	double theta = degrees_to_radians(vfov);
+	double h = tan(theta / 2);
+	double viewport_height = 2.0 * h;
+	double viewport_width = aspect_ratio * viewport_height;
+
 	double focal_length = 1.0;
 
 	cam.origin = point3_new(0, 0, 0);

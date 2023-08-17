@@ -45,25 +45,19 @@ int main(void) {
 	if (!(world && world->objects))
 		return EXIT_FAILURE;
 
-	material material_ground = lambertian_new(color_new(0.8, 0.8, 0.0));
-	material material_center = lambertian_new(color_new(0.1, 0.2, 0.5));
-	material material_left = dielectric_new(1.5);
-	material material_right = metal_new(color_new(0.8, 0.6, 0.2), 0.0);
+	material material_left = lambertian_new(color_new(0, 0, 1));
+	material material_right = lambertian_new(color_new(1, 0, 0));
 
-	sphere sphere1 = sphere_new(point3_new(0.0, -100.5, -1.0), 100.0, material_ground);
-	sphere sphere2 = sphere_new(point3_new(0.0, 0.0, -1.0), 0.5, material_center);
-	sphere sphere3 = sphere_new(point3_new(-1.0, 0.0, -1.0), 0.5, material_left);
-	sphere sphere4 = sphere_new(point3_new(-1.0, 0.0, -1.0), -0.4, material_left);
-	sphere sphere5 = sphere_new(point3_new(1.0, 0.0, -1.0), 0.5, material_right);
+	double R = cos(M_PI / 4);
+
+	sphere sphere1 = sphere_new(point3_new(-1 * R, 0, -1), R, material_left);
+	sphere sphere2 = sphere_new(point3_new(R, 0, -1), R, material_right);
 
 	vec_push_back(world->objects, &sphere1);
 	vec_push_back(world->objects, &sphere2);
-	vec_push_back(world->objects, &sphere3);
-	vec_push_back(world->objects, &sphere4);
-	vec_push_back(world->objects, &sphere5);
 
 	/* Camera */
-	camera cam = camera_new();
+	camera cam = camera_new(90.0, ASPECT_RATIO);
 
 	/* Render */
 	FILE *image = fopen("./render.ppm", "w");
