@@ -63,9 +63,13 @@ int main(void) {
 	vec_push_back(world->objects, &sphere5);
 
 	/* Camera */
-	camera cam = camera_new(
-		point3_new(-2, 2, 1), point3_new(0, 0, -1), vec3_new(0, 1, 0), 20, ASPECT_RATIO
-	);
+	point3 lookfrom = point3_new(3, 3 ,2);
+	point3 lookat = point3_new(0, 0, -1);
+	vec3 vup = vec3_new(0, 1, 0);
+	double dist_to_focus = magnitude(subtract(lookfrom, lookat));
+	double aperture = 2.0;
+
+	camera cam = camera_new(lookfrom, lookat, vup, 20, ASPECT_RATIO, aperture, dist_to_focus);
 
 	/* Render */
 	FILE *image = fopen("./render.ppm", "w");

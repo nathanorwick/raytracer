@@ -14,10 +14,12 @@ typedef struct camera {
 	point3 lower_left_corner;
 	vec3 horizontal;
 	vec3 vertical;
+	vec3 u, v, w;
+	double lens_radius;
 } camera;
 
 /* vfov is the vertical fov in degrees (will be converted to radians inside) */
-camera camera_new(point3 lookfrom, point3 lookat, vec3 vup, double vfov, double aspect_ratio);
+camera camera_new(point3 lookfrom, point3 lookat, vec3 vup, double vfov, double aspect_ratio, double aperture, double focus_dist);
 
 ray get_ray(const camera cam, const double u, const double v);
 
