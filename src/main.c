@@ -47,13 +47,13 @@ int main(void) {
 
 	material material_ground = lambertian_new(color_new(0.8, 0.8, 0.0));
 	material material_center = lambertian_new(color_new(0.1, 0.2, 0.5));
-	material material_left = dielectric_new(1.5);
-	material material_right = metal_new(color_new(0.8, 0.6, 0.2), 0.0);
+	material material_left   = dielectric_new(1.5);
+	material material_right  = metal_new(color_new(0.8, 0.6, 0.2), 0.0);
 
 	sphere sphere1 = sphere_new(point3_new(0.0, -100.5, -1.0), 100.0, material_ground);
 	sphere sphere2 = sphere_new(point3_new(0.0, 0.0, -1.0), 0.5, material_center);
 	sphere sphere3 = sphere_new(point3_new(-1.0, 0.0, -1.0), 0.5, material_left);
-	sphere sphere4 = sphere_new(point3_new(-1.0, 0.0, -1.0), -0.4, material_left);
+	sphere sphere4 = sphere_new(point3_new(-1.0, 0.0, -1.0), -0.45, material_left);
 	sphere sphere5 = sphere_new(point3_new(1.0, 0.0, -1.0), 0.5, material_right);
 
 	vec_push_back(world->objects, &sphere1);
@@ -63,7 +63,9 @@ int main(void) {
 	vec_push_back(world->objects, &sphere5);
 
 	/* Camera */
-	camera cam = camera_new();
+	camera cam = camera_new(
+		point3_new(-2, 2, 1), point3_new(0, 0, -1), vec3_new(0, 1, 0), 20, ASPECT_RATIO
+	);
 
 	/* Render */
 	FILE *image = fopen("./render.ppm", "w");
