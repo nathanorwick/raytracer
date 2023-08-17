@@ -5,7 +5,38 @@ This is a simple ray tracer program, based off of **Ray Tracing in One Weekend**
 
 # Project Setup
 
-TODO - tree file structure
+    % tree .
+    .
+    ├── CMakeLists.txt
+    ├── README.md
+    ├── build.sh
+    ├── include
+    │   ├── camera.h
+    │   ├── color.h
+    │   ├── hittable.h
+    │   ├── hittable_list.h
+    │   ├── image.h
+    │   ├── material.h
+    │   ├── point3.h
+    │   ├── ray.h
+    │   ├── sphere.h
+    │   ├── utility.h
+    │   ├── vec3.h
+    │   └── vector.h
+    ├── run.sh
+    └── src
+        ├── camera.c
+        ├── color.c
+        ├── hittable.c
+        ├── hittable_list.c
+        ├── main.c
+        ├── material.c
+        ├── point3.c
+        ├── ray.c
+        ├── sphere.c
+        ├── utility.c
+        ├── vec3.c
+        └── vector.c
 
 To compile the program on Linux or MacOS, from the project directory, run
 

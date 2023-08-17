@@ -43,12 +43,12 @@ hittable_list *random_scene(void) {
 		return NULL;
 
     material ground_material = lambertian_new(color_new(0.5, 0.5, 0.5));
-    sphere *ground_sphere = malloc(sizeof(*ground_sphere));
+	sphere *ground_sphere = malloc(sizeof(*ground_sphere));
 	*ground_sphere = sphere_new(point3_new(0,-1000,0), 1000, ground_material);
 	vec_push_back(world->objects, ground_sphere);
 
-    for (int a = -11; a < 11; a++) {
-        for (int b = -11; b < 11; b++) {
+	for (int a = -11; a < 11; a++) {
+		for (int b = -11; b < 11; b++) {
             double choose_mat = random_double();
             point3 center = point3_new(a + 0.9 * random_double(), 0.2, b + 0.9 * random_double());
 
