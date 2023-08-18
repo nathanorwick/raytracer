@@ -3,6 +3,8 @@
 
 This is a simple ray tracer program, based off of *Ray Tracing in One Weekend* by **Peter Shirley**. The referenced material uses **C++** to program the ray tracer, whereas this project is written in **C**.
 
+See the final render & references at the bottom.
+
 # Project Setup
 
     % tree .
@@ -68,7 +70,10 @@ Many structs are passed by value, rather than by reference. This is convenient f
 
 *Ray Tracing in One Weekend* seems to have been updated to clear up `main` & leverage the `camera` object more since I wrote this. It would be more readable to do similarly in this project, so that `main.c` is less packed.
 
+# Final Render
+
+![render](https://github.com/nathanorwick/raytracer/assets/89475097/90131501-a36b-422e-9224-b482615a4b62)
+
 # References
 
 - https://raytracing.github.io/books/RayTracingInOneWeekend.html
-
