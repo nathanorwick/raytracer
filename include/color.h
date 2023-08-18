@@ -6,7 +6,7 @@
 
 typedef vec3 color;
 
-color (*color_new)(const double e1, const double e2, const double e3);
+extern color (*color_new)(const double e1, const double e2, const double e3);
 
 void write_color(FILE *out, const color pixel, const int samples_per_pixel);
 

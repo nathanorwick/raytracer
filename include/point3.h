@@ -5,7 +5,7 @@
 
 typedef vec3 point3;
 
-point3 (*point3_new)(const double e1, const double e2, const double e3);
+extern point3 (*point3_new)(const double e1, const double e2, const double e3);
 
 double x(const vec3 v);
 double y(const vec3 v);

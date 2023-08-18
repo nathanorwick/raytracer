@@ -38,6 +38,12 @@ target_include_directories(raytracer PUBLIC
 	${INCLUDE_PREFIX}
 )
 
+if(UNIX AND NOT APPLE)
+	target_link_libraries(raytracer PUBLIC
+		m
+	)
+endif()
+
 add_executable(main
 	${SOURCE_PREFIX}/main.c
 )
