@@ -2,10 +2,10 @@ cmake_minimum_required(VERSION 3.14)
 project(raytracer)
 
 add_compile_options(
-    -Wall -Wextra -Wpedantic -Werror
+	-Wall -Wextra -Wpedantic -Werror
 	# -fsanitize={address,undefined} -g
 	# -Wshadow -Wpointer-arith -Wcast-align
-    -std=c11 -O3
+	-std=c11 -O3
 )
 
 set(SOURCE_PREFIX
