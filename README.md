@@ -70,6 +70,8 @@ Many structs are passed by value, rather than by reference. This is convenient f
 
 *Ray Tracing in One Weekend* seems to have been updated to clear up `main` & leverage the `camera` object more since I wrote this. It would be more readable to do similarly in this project, so that `main.c` is less packed.
 
+The `random_scene` function could also be updated to create a more novel image, as well as changing the `random_double` function to be more *random* than it currently is.
+
 # Final Render
 
 ![render](https://github.com/nathanorwick/raytracer/assets/89475097/90131501-a36b-422e-9224-b482615a4b62)
