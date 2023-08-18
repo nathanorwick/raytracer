@@ -10,7 +10,6 @@
 #include "vec3.h"
 
 #include <math.h>
-#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 

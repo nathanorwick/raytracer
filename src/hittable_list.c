@@ -1,6 +1,6 @@
 #include "hittable_list.h"
 #include "vector.h"
-#include "stdlib.h"
+#include <stdlib.h>
 
 hittable_list *hittable_list_new(void) {
 	hittable_list *list = malloc(sizeof(*list));
