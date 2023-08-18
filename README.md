@@ -68,7 +68,7 @@ Many structs are passed by value, rather than by reference. This is convenient f
 
 ### Other Changes:
 
-*Ray Tracing in One Weekend* seems to have been updated to clear up `main` & leverage the `camera` object more since I wrote this. It would be more readable to do similarly in this project, so that `main.c` is less packed.
+*Ray Tracing in One Weekend* seems to have been updated since I wrote most of this. I cleaned up my `main.c` file similarly, to leverage the `camera` object more. It might be good to go through the files in the future & clean up the organization. 
 
 The `random_scene` function could also be updated to create a more novel image, as well as changing the `random_double` function to be more *random* than it currently is.
 

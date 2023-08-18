@@ -1,6 +1,8 @@
 #ifndef CAMERA_H
 #define CAMERA_H
 
+#include "color.h"
+#include "hittable_list.h"
 #include "image.h"
 #include "point3.h"
 #include "ray.h"
@@ -19,5 +21,9 @@ typedef struct camera {
 camera camera_new(point3 lookfrom, point3 lookat, vec3 vup, double vfov, double aspect_ratio, double aperture, double focus_dist);
 
 ray get_ray(const camera cam, const double u, const double v);
+
+color ray_color(ray r, hittable_list *world, int depth);
+
+hittable_list *random_scene(void);
 
 #endif
