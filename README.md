@@ -50,7 +50,7 @@ Once the program is compiled, execute it with
 
 This will open the rendered image after, which will also be stored as `results/render.ppm`.
 
-For more documentation, see the header files under `include/`. TODO - add more documentation.
+To change the image quality or size, see `include/image.h`. For more documentation, see the header files under `include/`. TODO - add more documentation.
 
 # Future Ideas
 
@@ -74,7 +74,7 @@ The `random_scene` function could also be updated to create a more novel image, 
 
 # Final Render
 
-![render](https://github.com/nathanorwick/raytracer/assets/89475097/90131501-a36b-422e-9224-b482615a4b62)
+![render](https://github.com/nathanorwick/raytracer/assets/89475097/e18f841f-2671-4965-a6a8-e746bd4a307c)
 
 # References
 
